@@ -32,5 +32,6 @@ Status: `offen` = nicht umgesetzt. Quelle: ursprüngliche Featureliste des Proje
 | F-24 | Alle Metadaten (Titel, URL, Tags) verschlüsselt speichern | umgesetzt, ADR-0002 |
 | F-28 | Jeder Eintrag in der Liste hat ein Link-Symbol: ein gezielter Klick öffnet die gespeicherte Seite in einem neuen Tab (Cmd/Strg-Klick im Hintergrund). Ein Klick auf den Eintrag selbst öffnet nur das Formular. Nur http(s)-Adressen, ohne Schema wird `https://` ergänzt | umgesetzt |
 | F-29 | Feedback im About-Tab: Link zu den GitHub-Vorlagen (Fehler, Idee) und „Per E-Mail schreiben“ mit vorbereitetem Entwurf (Version, Browser, System); die App sendet selbst nichts, nur auf Klick | umgesetzt |
+| F-30 | draob läuft auch in Firefox (Desktop, ab 140) aus demselben Quellcode; Sicherungen sind zwischen Chrome und Firefox austauschbar | Build umgesetzt (ADR-0005), Test in echtem Firefox und Signierung offen |
 | F-14 | Passwörter speichern, auflisten, löschen | umgesetzt (verschlüsselt) |
 | F-15 | Passwörter dauerhaft entschlüsselbar (Masterpasswort) | umgesetzt, ADR-0001 |

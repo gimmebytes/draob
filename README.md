@@ -7,7 +7,7 @@
 <p align="center"><sub><b>draob</b> ist <i>board</i> rückwärts: die Rückseite deiner Boards, auf der die Passwörter sicher liegen.</sub></p>
 
 <p align="center">
-  draob ist eine Chrome-Extension, die die Passwörter deiner Miro-Boards verschlüsselt speichert,
+  draob ist eine Browser-Extension für Chrome und Firefox, die die Passwörter deiner Miro-Boards verschlüsselt speichert,
   das richtige Board beim Öffnen erkennt und das Passwort mit einem Klick einfügt.
 </p>
 
@@ -66,7 +66,7 @@ aufgeräumte Schaltzentrale direkt im Browser.
    vergeben, speichern. Bekanntes Board? Der Eintrag ist schon da.
 3. **Einfügen.** „In Miro einfügen“ klicken, in Miro bestätigen. Fertig.
 
-Der Tresor sperrt sich, wenn du Chrome schließt, oder wenn du auf **Sperren** klickst.
+Der Tresor sperrt sich, wenn du den Browser schließt, oder wenn du auf **Sperren** klickst.
 
 ## Download
 
@@ -94,6 +94,21 @@ Dann in Chrome:
 Nach einem Update: `npm run build` und in `chrome://extensions` auf **Neu laden** klicken. Die Erweiterungs-ID ist fest, deine Einträge bleiben auch erhalten, wenn du eine neue ZIP in einen anderen Ordner entpackst. Wer von einer Version bis v0.1.1 kommt, exportiert vorher die Sicherung und stellt sie in der neuen Version wieder her (die ID wechselt einmalig).
 Für das Badge auf einem Board die Miro-Seite einmal neu laden.
 
+### Firefox
+
+Gleicher Quellcode, eigener Build (Firefox 140 oder neuer, nur Desktop):
+
+```bash
+npm ci
+npm run build:firefox
+```
+
+- **Zum Ausprobieren:** `about:debugging#/runtime/this-firefox` → **Temporäres Add-on laden…** → `dist-firefox/manifest.json` wählen.
+  Das Add-on verschwindet beim Neustart von Firefox, rechne damit, dass der Tresor mit verschwindet. Vorher eine Sicherung speichern.
+- **Dauerhaft:** Firefox lädt dauerhaft nur signierte Erweiterungen. Wie du `dist-firefox/` signieren lässt (kostenlos, ohne Veröffentlichung), steht in [docs/releasing.md](docs/releasing.md#firefox).
+
+Der Tresor gehört zum Browser. Wer von Chrome nach Firefox wechselt, speichert in Chrome unter **Config** eine Sicherung und stellt sie in Firefox auf der Verwaltungsseite wieder her.
+
 ## Sicherheit & Ehrlichkeit
 
 **Was draob tut**
@@ -102,7 +117,7 @@ Für das Badge auf einem Board die Miro-Seite einmal neu laden.
   (600.000 Iterationen, zufälliges Salt).
 - **Alles lokal:** Es gibt keinen Server, keine Konten und keine Analytics. Es wird nichts übertragen.
 - **Kein Klartext im Speicher:** Passwörter, Titel, URLs und Tags liegen in einem verschlüsselten Block.
-  Der abgeleitete Schlüssel lebt nur in `chrome.storage.session` und verschwindet, wenn Chrome beendet wird.
+  Der abgeleitete Schlüssel lebt nur in `storage.session` und verschwindet, wenn der Browser beendet wird.
 - **Wenig Rechte:** nur drei Permissions, jede mit einem Zweck:
 
   | Permission | Wofür |
@@ -121,7 +136,7 @@ Für das Badge auf einem Board die Miro-Seite einmal neu laden.
   einen etablierten Passwortmanager. Für Board-Passwörter, die sonst in Chat-Verläufen liegen, ist es ein
   deutlicher Schritt nach vorn.
 - Es gibt noch keinen Auto-Lock nach Zeit und keinen Weg, das Masterpasswort zu ändern. Eine Sicherung ist mit dem Masterpasswort von damals verschlüsselt.
-- Wer Zugriff auf dein entsperrtes Chrome-Profil hat, kann das Popup benutzen. Sperre den Tresor, wenn du weggehst.
+- Wer Zugriff auf dein entsperrtes Browser-Profil hat, kann das Popup benutzen. Sperre den Tresor, wenn du weggehst.
 
 Die technischen Details stehen in [ADR-0001](docs/decisions/ADR-0001-key-management.md) (Schlüsselmodell)
 und [ADR-0002](docs/decisions/ADR-0002-encrypted-vault-v2.md) (Tresor-Format).
@@ -133,6 +148,7 @@ und [ADR-0002](docs/decisions/ADR-0002-encrypted-vault-v2.md) (Tresor-Format).
 - [x] Suche, Tags, Favoriten, Dublettenerkennung
 - [x] Verschlüsselte Sicherung und Wiederherstellung, Reset bei vergessenem Passwort
 - [ ] Automatisches Sperren nach Zeit, Masterpasswort ändern
+- [x] Firefox-Build aus demselben Quellcode (noch nicht signiert/veröffentlicht)
 - [ ] Chrome Web Store
 - [ ] Ende-zu-Ende-Tests im echten Browser
 

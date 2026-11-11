@@ -50,3 +50,23 @@ Deshalb fügt `npm run build` den öffentlichen Schlüssel aus `scripts/extensio
 - **Schlüssel:** nur der öffentliche Teil liegt im Repo. Der private Teil wurde verworfen, er wird nur zum Signieren eigener CRX-Dateien gebraucht. Den Schlüssel nie austauschen, sonst ändert sich die ID wieder und alle müssen ihre Sicherung einspielen.
 - **Store-Paket:** `npm run build -- --store` lässt den Schlüssel weg (so baut der Workflow „Package extension“). Der Store vergibt eine eigene ID. Wer vom ZIP-Weg auf die Store-Version wechselt, hat dort einen neuen, leeren Tresor und spielt die Sicherung ein.
 - **Einmalig beim Umstieg:** Wer bisher eine Version ohne `key` geladen hat (bis v0.1.1), bekommt mit der ersten Version mit `key` eine neue ID. Vorher in der alten Installation exportieren, danach in der neuen wiederherstellen.
+
+## Firefox
+
+Der Firefox-Build kommt aus demselben Quellcode und derselben Version (ADR-0005): `npm run build:firefox` schreibt nach `dist-firefox/`. Der Workflow `Release` packt ihn noch nicht; das ist offen (`specs/002-firefox-support/tasks.md`).
+
+Firefox installiert Erweiterungen dauerhaft nur, wenn Mozilla sie signiert hat. Zwei Wege, beide ohne öffentliche Listung:
+
+1. **Signieren lassen, selbst verteilen (empfohlen für die Firma):** Einmalig ein Konto auf addons.mozilla.org anlegen und unter „Developer Hub → Manage API Keys“ Schlüssel erzeugen. Dann
+   ```bash
+   npm run build:firefox
+   npx web-ext sign --source-dir dist-firefox --channel unlisted --ignore-files "*.map" "*.LEGAL.txt" \
+     --api-key "$AMO_JWT_ISSUER" --api-secret "$AMO_JWT_SECRET"
+   ```
+   Das Ergebnis ist eine signierte `.xpi` in `web-ext-artifacts/`. Ein Doppelklick bzw. „Add-on aus Datei installieren…“ installiert sie dauerhaft. Schlüssel nie committen und nie in Logs ausgeben.
+   Jede Version braucht eine höhere Versionsnummer als die vorherige (`npm version`).
+2. **Öffentlich auf AMO (listed):** ZIP aus `dist-firefox/` (ohne `.map`) hochladen, dazu den Quellcode mit der Bauanleitung (`npm ci && npm run build:firefox`, Node laut `.nvmrc`), weil der Code gebündelt und minifiziert ist.
+
+Zum Ausprobieren ohne Signatur: `about:debugging#/runtime/this-firefox` → „Temporäres Add-on laden…“. Das Add-on ist nach dem Neustart weg.
+Mit Firefox Developer Edition oder Nightly lässt sich die Signaturpflicht über `xpinstall.signatures.required = false` abschalten.
+Firmen können signierte Erweiterungen außerdem per Richtlinie (`ExtensionSettings`) verteilen.

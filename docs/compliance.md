@@ -29,4 +29,19 @@ Stand 2026-11-05. Ein Haken heißt: im Repo belegt. Alles andere ist offen.
 | Kontaktadresse | festgelegt: `draob@engelrico.de` (in README, SECURITY.md, Datenschutzerklärung, Listing) | Alias/Postfach muss bei der Domain eingerichtet sein und Mails annehmen (bitte testen) |
 | Entwicklerkonto, Trader-Angaben, Namensprüfung | offen (Nutzer) | |
 
+## Firefox (addons.mozilla.org)
+
+Stand 2026-11-11. Build und Linter belegt, alles Weitere offen. Details und Begründungen: `docs/decisions/ADR-0005-firefox-build.md`.
+
+| Punkt | Status | Beleg / offen |
+|---|---|---|
+| Manifest V3 | erfüllt | `scripts/manifest.firefox.json` über `public/manifest.json`; Event-Page statt Service Worker |
+| Linter | 0 Fehler, 5 Warnungen | `npx web-ext lint --source-dir dist-firefox --ignore-files "*.map" "*.LEGAL.txt"`; Warnungen aus `react-dom` und zu Android, siehe ADR-0005 |
+| Add-on-ID | `draob@engelrico.de` | von Projektinhaber zu bestätigen; später nicht mehr änderbar |
+| Datensammlung (`data_collection_permissions`) | `required: ["none"]` | passt zu `docs/privacy.md` (nichts wird übertragen) |
+| Permissions | unverändert | `activeTab`, `scripting`, `storage` plus Zugriff auf miro.com Boards; keine neue Berechtigung für Firefox |
+| Quellcode-Abgabe für AMO | möglich | Repo ist öffentlich; Bauanleitung `npm ci && npm run build:firefox` |
+| Test in echtem Firefox | offen | Checkliste in `docs/manual-testing.md` (Abschnitt Firefox) |
+| Signierung / Veröffentlichung | offen (Nutzer) | Mozilla-Konto und API-Schlüssel nötig, siehe `docs/releasing.md#firefox` |
+
 Release: Tag `vX.Y.Z` startet den Workflow `Release` und legt `draob-<Version>.zip` als GitHub-Release an (`docs/releasing.md`). `Package extension` (manuell) baut nur ein Artefakt. Upload in den Store erfolgt von Hand.

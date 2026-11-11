@@ -27,7 +27,10 @@ UI-Komponenten (`src/popup/`): `App` (Status, aktiver Tab, Formularzustand) → 
 (Design-Tokens als CSS-Variablen + Basis-Klassen), von esbuild als eine gemeinsame `dist/theme.css` für Popup und Verwaltungsseite
 ausgeliefert und in den HTML-Dateien verlinkt (keine Inline-Styles, CSP-konform).
 
-Build: `scripts/build.mjs` (esbuild) bündelt `src/*/index.js(x)` zu `dist/<name>.bundle.js`, `src/shared/theme.css` zu `dist/theme.css`, legt Lizenzhinweise der gebündelten Pakete als `*.LEGAL.txt` daneben und kopiert `public/` nach `dist/` (ADR-0003).
+Browser-Ziele (ADR-0005): Chrome und Firefox teilen `src/` und `public/`. Nur das Manifest unterscheidet sich: `public/manifest.json` ist die Chrome-Basis, `scripts/manifest.firefox.json` wird für Firefox darübergelegt
+(Event-Page statt Service Worker, `options_ui`, Add-on-ID, `data_collection_permissions`). Im Firefox läuft `src/background/index.js` als Event-Page; der Code ist derselbe, er hält keinen Zustand im Speicher.
+
+Build: `scripts/build.mjs` (esbuild) bündelt `src/*/index.js(x)` zu `dist/<name>.bundle.js`, `src/shared/theme.css` zu `dist/theme.css`, legt Lizenzhinweise der gebündelten Pakete als `*.LEGAL.txt` daneben und kopiert `public/` nach `dist/` (ADR-0003). `--browser firefox` baut dasselbe nach `dist-firefox/`, mit Firefox-Manifest und Ziel `firefox140`.
 
 ## Storage (ADR-0001, ADR-0002)
 Nur `src/shared/storage.js` spricht mit `chrome.storage`. Die UI nutzt `vaultStore()`.

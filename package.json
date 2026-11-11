@@ -2,13 +2,14 @@
   "name": "draob-extension",
   "version": "0.1.2",
   "private": true,
-  "description": "Chrome extension (MV3) for managing passwords of Miro boards.",
+  "description": "Browser extension (MV3, Chrome and Firefox) for managing passwords of Miro boards.",
   "license": "MIT",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
     "build": "node scripts/build.mjs",
+    "build:firefox": "node scripts/build.mjs --browser firefox",
     "lint": "eslint src tests scripts",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"tests/**/*.js\"",
     "test": "jest",
