@@ -1,4 +1,4 @@
-# Manuelle Release-Checkliste (echtes Chrome)
+# Manuelle Release-Checkliste (echtes Chrome und Firefox)
 
 Vor jedem Einreichen im Chrome Web Store einmal komplett durchgehen. Ergebnis mit Datum und Chrome-Version unten eintragen.
 Mindestversion laut Manifest: Chrome 110.
@@ -58,8 +58,23 @@ Mindestversion laut Manifest: Chrome 110.
 - [ ] Erweiterung deaktivieren/aktivieren, entfernen und neu laden: ohne Fehler
 - [ ] Optional: Edge ausprobieren (gleicher Build)
 
+## Firefox (`npm run build:firefox`)
+
+Mindestversion laut Manifest: Firefox 140. Gleiche Abläufe wie oben, dazu:
+
+- [ ] `about:debugging#/runtime/this-firefox` → „Temporäres Add-on laden…“ → `dist-firefox/manifest.json`; keine Warnung zum Manifest
+- [ ] Berechtigungen im Erweiterungen-Menü (Zahnrad → „Erweiterung verwalten“ → Berechtigungen): nur Zugriff auf miro.com; bei der signierten Installation zeigt Firefox „keine Daten werden gesammelt“
+- [ ] Icon über das Erweiterungen-Menü (Puzzle-Symbol) anheften, Popup öffnet, Masterpasswort anlegen, Eintrag speichern
+- [ ] Miro-Board öffnen: Badge erscheint am Icon (Miro-Seite ggf. einmal neu laden). Fehlt es, steht der Zugriff auf miro.com in Firefox womöglich noch auf „nicht erlaubt“ (Berechtigungen der Erweiterung prüfen) und das Ergebnis hier vermerken
+- [ ] Auf einem Board mit Passwortabfrage: „In Miro einfügen“ trägt das Passwort ein (activeTab und `scripting` nach Klick auf das Icon)
+- [ ] „Config“ → Sicherung speichern lädt die Datei herunter; auf der Verwaltungsseite (öffnet in einem Tab) Wiederherstellen mit dieser Datei funktioniert
+- [ ] Eine Sicherung aus Chrome lässt sich in Firefox wiederherstellen (und umgekehrt)
+- [ ] Firefox komplett schließen und neu öffnen: Tresor ist gesperrt (Sitzungsschlüssel weg), Einträge noch da (nur bei signierter Installation, ein temporäres Add-on verschwindet)
+- [ ] Browser-Konsole (`Strg+Umschalt+J`) und Popup-Konsole (Untersuchen) ohne CSP- oder Berechtigungsfehler
+- [ ] About-Tab zeigt „Firefox <Version>“ in der Feedback-Karte
+
 ## Ergebnis
 
-| Datum | Chrome-Version | Ergebnis | Bemerkungen |
-| ----- | -------------- | -------- | ----------- |
+| Datum | Browser und Version | Ergebnis | Bemerkungen |
+| ----- | ------------------- | -------- | ----------- |
 |       |                |          |             |

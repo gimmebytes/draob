@@ -88,6 +88,14 @@ describe('describeEnvironment', () => {
     ).toBe('ChromeOS');
   });
 
+  it('recognizes Firefox, which has no userAgentData', () => {
+    const nav = {
+      userAgent:
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:140.0) Gecko/20100101 Firefox/140.0',
+    };
+    expect(describeEnvironment(nav)).toEqual({ browser: 'Firefox 140', os: 'macOS' });
+  });
+
   it('reports unknown instead of throwing', () => {
     expect(describeEnvironment(null)).toEqual({ browser: 'unbekannt', os: 'unbekannt' });
     expect(describeEnvironment({})).toEqual({ browser: 'unbekannt', os: 'unbekannt' });

@@ -22,8 +22,10 @@ export function describeEnvironment(nav = globalThis.navigator) {
     // Edge's user agent contains "Chrome/" too, so look for Edge first.
     const edge = /Edg\/(\d+)/.exec(ua);
     const chrome = /Chrome\/(\d+)/.exec(ua);
+    const firefox = /Firefox\/(\d+)/.exec(ua); // Firefox sends no userAgentData
     if (edge) browser = `Edge ${edge[1]}`;
     else if (chrome) browser = `Chrome ${chrome[1]}`;
+    else if (firefox) browser = `Firefox ${firefox[1]}`;
   }
 
   let os = nav.userAgentData?.platform || UNKNOWN;

@@ -1,0 +1,21 @@
+{
+  "background": {
+    "service_worker": null,
+    "scripts": ["background.bundle.js"]
+  },
+  "options_page": null,
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "minimum_chrome_version": null,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "draob@engelrico.de",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}
